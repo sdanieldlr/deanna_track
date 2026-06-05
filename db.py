@@ -19,15 +19,15 @@ def get_data():
         
             (SELECT COUNT(*)
             FROM cliperest_user
-            WHERE DATE(created) = CURDATE()) AS users_today,
+            WHERE DATE(created) = CURDATE() - INTERVAL 1 DAY) AS users,
 
             (SELECT COUNT(*)
             FROM cliperest_book
-            WHERE DATE(created) = CURDATE()) AS ministores_today,
+            WHERE DATE(created) = CURDATE() - INTERVAL 1 DAY) AS ministores,
 
             (SELECT COALESCE(SUM(numViews),0)
             FROM cliperest_book
-            WHERE DATE(created) = CURDATE()) AS views_today
+            WHERE DATE(created) = CURDATE() - INTERVAL 1 DAY) AS views
     """)
 
     results = cursor.fetchone()
@@ -36,7 +36,7 @@ def get_data():
     connection.close()
 
     return {
-        "users_today": results[0],
-        "ministores_today": results[1],
-        "views_today": int(results[2])
+        "users": results[0],
+        "ministores": results[1],
+        "views": int(results[2])
     }

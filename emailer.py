@@ -17,11 +17,11 @@ def send_email(data):
     msg.set_content(
         f"""
         Good day!
-        Here's a snapshot of today's activity.
+        Here's a snapshot of yesterday's activity.
 
-            Number of new users today: {data['users_today']}
-            Number of ministores created today: {data['ministores_today']}
-            Total views on today's ministores: {data['views_today']}
+            Number of new users yesterday: {data['users']}
+            Number of ministores created yesterday: {data['ministores']}
+            Total views on yesterday's ministores: {data['views']}
         """
     )
 
