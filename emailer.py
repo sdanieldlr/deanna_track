@@ -5,15 +5,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+print("REPORT_EMAILS =", os.getenv("REPORT_EMAILS"))
+
 def send_email(data):
     msg = EmailMessage()
     msg["Subject"] = "Daily Deanna Report"
     msg["From"] = os.getenv("SMTP_USERNAME")
 
-    with open("emails.txt") as f:
-        recipients = [line.strip() for line in f if line.strip()]
+    emails = os.getenv("REPORT_EMAILS")
+    if not emails:
+        raise ValueError("REPORT_EMAILS is missing")
 
+    recipients = emails.split(",")
     msg["To"] = ", ".join(recipients)
+    
     msg.set_content(
         f"""
         Good day!
